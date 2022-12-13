@@ -8,3 +8,6 @@ composer require symfony/orm-pack
 composer require --dev symfony/maker-bundle
 ```    
 
+- Creation Book entity + fixtures 
+
+  - filter on `category[]`

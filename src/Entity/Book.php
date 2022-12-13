@@ -4,13 +4,19 @@ namespace App\Entity;
 
 use ApiPlatform\Metadata\ApiResource;
 use App\Repository\BookRepository;
-use Doctrine\DBAL\Types\Types;
+use App\State\BookCollectionProvider;
+use App\State\BookPostProcessor;
+use App\State\TopBookCollectionProvider;
 use Doctrine\ORM\Mapping as ORM;
 use ApiPlatform\Metadata\ApiFilter;
 use ApiPlatform\Doctrine\Orm\Filter\SearchFilter;
+use ApiPlatform\Metadata\GetCollection;
+use ApiPlatform\Metadata\Post;
 
 #[ORM\Entity(repositoryClass: BookRepository::class)]
 #[ApiResource]
+#[GetCollection(provider: BookCollectionProvider::class)]
+#[Post(processor: BookPostProcessor::class)]
 class Book
 {
     #[ORM\Id]
@@ -21,8 +27,8 @@ class Book
     #[ORM\Column(length: 255)]
     private ?string $title = null;
 
-    #[ORM\Column(type: Types::ARRAY, nullable: true)]
-    #[ApiFilter(SearchFilter::class, strategy: 'exact')]
+    #[ORM\Column(nullable: true)]
+    #[ApiFilter(SearchFilter::class, strategy: 'partial')]
     private array $category = [];
 
     public function getId(): ?int
