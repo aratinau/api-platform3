@@ -37,7 +37,6 @@ final class BookCollectionProvider implements ProviderInterface
         $queryBuilder = $repository->createQueryBuilder($alias);
         // $alias = $queryBuilder->getRootAliases()[0];
 
-        $queryNameGenerator = new QueryNameGenerator();
         foreach ($this->collectionExtensions as $extension) {
             /*
              * "ApiPlatform\Doctrine\Orm\Extension\FilterExtension"
