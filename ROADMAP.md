@@ -17,3 +17,22 @@ composer require --dev symfony/maker-bundle
 
     composer require "lexik/jwt-authentication-bundle"
     php bin/console lexik:jwt:generate-keypair
+
+## TODO
+
+  - [ ] mail confirmation
+  - [ ] resend mail confirmation (avec expiration token)
+
+
+  - [ ] password forgot
+  - [ ] change password forgot
+
+
+  - [ ] update mail (donc resend pour verif)
+  - [ ] update password (donc rentrer le password actuel)
+
+
+  - [ ] multipart
+
+
+  - [ ] faire un enum au lieu d'un array dans category

@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use ApiPlatform\Metadata\ApiResource;
+use ApiPlatform\Metadata\Get;
+use ApiPlatform\Metadata\Put;
 use App\Repository\BookRepository;
 use App\State\BookCollectionProvider;
 use App\State\BookPostProcessor;
@@ -12,10 +14,13 @@ use ApiPlatform\Metadata\ApiFilter;
 use ApiPlatform\Doctrine\Orm\Filter\SearchFilter;
 use ApiPlatform\Metadata\GetCollection;
 use ApiPlatform\Metadata\Post;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ORM\Entity(repositoryClass: BookRepository::class)]
 #[ApiResource]
 #[GetCollection(provider: BookCollectionProvider::class)]
+#[Get]
+#[Put]
 #[Post(processor: BookPostProcessor::class)]
 class Book
 {
@@ -25,10 +30,12 @@ class Book
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
+    #[Groups(groups: ['book:read', 'book:write'])]
     private ?string $title = null;
 
     #[ORM\Column(nullable: true)]
     #[ApiFilter(SearchFilter::class, strategy: 'partial')]
+    #[Groups(groups: ['book:read', 'book:write'])]
     private array $category = [];
 
     public function getId(): ?int

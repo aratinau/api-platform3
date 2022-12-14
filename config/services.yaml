@@ -20,6 +20,18 @@ services:
             - '../src/Entity/'
             - '../src/Kernel.php'
 
+    App\ApiPlatform\ResourceMetadataCollectionFactory:
+        decorates: 'api_platform.doctrine.orm.metadata.resource.metadata_collection_factory'
+        arguments: [ '@App\ApiPlatform\ResourceMetadataCollectionFactory.inner']
+
+    App\ApiPlatform\PropertyMetadataFactory:
+        decorates: 'api_platform.metadata.property.metadata_factory'
+        arguments: [ '@App\ApiPlatform\PropertyMetadataFactory.inner']
+
+    App\Serializer\SerializerContextBuilder:
+        decorates: 'api_platform.serializer.context_builder'
+        arguments: [ '@App\Serializer\SerializerContextBuilder.inner']
+
     App\State\BookCollectionProvider:
         bind:
             $collectionExtensions: !tagged api_platform.doctrine.orm.query_extension.collection
