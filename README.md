@@ -33,6 +33,8 @@ composer require --dev symfony/maker-bundle
 
 ### Association Override
 
+override a relationship mapping defined by the mapped superclass
+
     Things to note:
       - The "association override" specifies the overrides base on the property name.
       - This feature is available for all kind of associations. (OneToOne, OneToMany, ManyToOne, ManyToMany)
@@ -95,6 +97,49 @@ class Admin extends User
 commit related: https://github.com/aratinau/api-platform3/commit/68209b6a345d4def8ab08d6761b13212cd41e20b
 
 doctrine documentation: https://www.doctrine-project.org/projects/doctrine-orm/en/2.14/reference/inheritance-mapping.html#association-override 
+
+### Attribute Override
+
+override a field mapping defined by the mapped superclass
+
+```php
+#[MappedSuperclass]
+class User
+{
+    #[ORM\Column(name: 'user_name', length: 250, unique: false, nullable: true)]
+    private ?string $name = null;
+}
+
+///////////////////////////////////////////////////////////////////////////////
+
+#[ORM\Entity]
+#[ORM\AttributeOverrides([
+    new ORM\AttributeOverride(
+        name: 'id',
+        column: new ORM\Column(
+            name: 'guest_id',
+            type: 'integer',
+            length: 140
+        )
+    ),
+    new ORM\AttributeOverride(
+        name: 'name',
+        column: new ORM\Column(
+            name: 'guest_name',
+            length: 240,
+            unique: true,
+            nullable: false
+        )
+    )
+])]
+class Guest extends User
+{
+    private ?int $id = null;
+    private ?string $name = null;
+}
+```
+
+doctrine documentation: https://www.doctrine-project.org/projects/doctrine-orm/en/2.14/reference/inheritance-mapping.html#attribute-override
 
 ## TODO
 
