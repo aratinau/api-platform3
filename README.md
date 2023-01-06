@@ -139,6 +139,8 @@ class Guest extends User
 }
 ```
 
+commit related: https://github.com/aratinau/api-platform3/commit/0446d1d379b9e95b2d27bfab55fc755683ed1d2c
+
 doctrine documentation: https://www.doctrine-project.org/projects/doctrine-orm/en/2.14/reference/inheritance-mapping.html#attribute-override
 
 ## TODO
