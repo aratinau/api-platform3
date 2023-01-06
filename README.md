@@ -10,7 +10,7 @@ Generated from template https://github.com/dunglas/symfony-docker
 4. Open `https://localhost` in your favorite web browser and [accept the auto-generated TLS certificate](https://stackoverflow.com/a/15076602/1352334)
 5. Run `docker compose down --remove-orphans` to stop the Docker containers.
 
-# Roadmap
+## Roadmap
 
 - fork from dunglas/symfony-docker
 - install doctrine, api-platform, fixtures
@@ -28,6 +28,73 @@ composer require --dev symfony/maker-bundle
 
     composer require "lexik/jwt-authentication-bundle"
     php bin/console lexik:jwt:generate-keypair
+
+## Doctrine
+
+### Association Override
+
+    Things to note:
+      - The "association override" specifies the overrides base on the property name.
+      - This feature is available for all kind of associations. (OneToOne, OneToMany, ManyToOne, ManyToMany)
+      - The association type CANNOT be changed.
+      - The override could redefine the joinTables or joinColumns depending on the association type.
+      - The override could redefine inversedBy to reference more than one extended entity.
+      - The override could redefine fetch to modify the fetch strategy of the extended entity.
+
+```php
+<?php
+
+class User implements UserInterface, PasswordAuthenticatedUserInterface
+{
+    /** @var Collection<int, Group> */
+    #[ORM\JoinTable(name: 'users_groups')]
+    #[ORM\JoinColumn(name: 'user_id', referencedColumnName: 'id')]
+    #[ORM\InverseJoinColumn(name: 'group_id', referencedColumnName: 'id')]
+    #[ORM\ManyToMany(targetEntity: Group::class, inversedBy: 'users')]
+    protected Collection $groups;
+
+    #[ORM\ManyToOne(targetEntity: 'Address')]
+    #[ORM\JoinColumn(name: 'address_id', referencedColumnName: 'id', nullable: true)]
+    protected Address|null $address = null;
+
+    public function __construct()
+    {
+        $this->groups = new ArrayCollection();
+    }
+}
+
+///////////////////////////////////////////////////////////////////////////////
+
+#[ORM\Entity]
+#[ORM\AssociationOverrides([
+    new ORM\AssociationOverride(
+        name: 'groups',
+        joinColumns: [
+            new ORM\JoinColumn(name: 'adminuser_id')
+        ],
+        inverseJoinColumns: [
+            new ORM\JoinColumn(name: 'admingroup_id')
+        ],
+        joinTable: new ORM\JoinTable(
+            name: 'users_admingroups',
+        )
+    ),
+    new ORM\AssociationOverride(
+        name: 'address',
+        joinColumns: [
+            new ORM\JoinColumn(name: 'adminaddress_id',
+                referencedColumnName: 'id')
+        ]
+    )
+])]
+class Admin extends User
+{
+}
+```
+  
+commit related: https://github.com/aratinau/api-platform3/commit/68209b6a345d4def8ab08d6761b13212cd41e20b
+
+doctrine documentation: https://www.doctrine-project.org/projects/doctrine-orm/en/2.14/reference/inheritance-mapping.html#association-override 
 
 ## TODO
 
