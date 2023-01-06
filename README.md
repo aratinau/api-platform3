@@ -190,6 +190,8 @@ class Toothbrush
 
 ```
 
+commit related: https://github.com/aratinau/api-platform3/commit/f15447fb7bf19820de5a862de625dffee4896214
+
 doctrine documentation: https://www.doctrine-project.org/projects/doctrine-orm/en/2.14/reference/inheritance-mapping.html#mapped-superclasses
 
 ## TODO
