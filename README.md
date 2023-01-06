@@ -31,6 +31,7 @@ composer require --dev symfony/maker-bundle
 
 ## TODO
 
+### User
 - [ ] mail confirmation
 - [ ] resend mail confirmation (expiration date)
 
@@ -42,11 +43,14 @@ composer require --dev symfony/maker-bundle
 - [ ] update mail (resend confirmation mail + expiration date)
 - [ ] update password (need current password)
 
+### File
 
 - [ ] multipart
 
-
+### Misc
 - [ ] enum instead array in Book $category
+
+### Doctrine
 
 - [ ] all DiscriminatorMap {"NONE", "JOINED", "SINGLE_TABLE", "TABLE_PER_CLASS"} 
 
