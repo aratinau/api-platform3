@@ -148,6 +148,50 @@ commit related: https://github.com/aratinau/api-platform3/commit/0446d1d379b9e95
 
 doctrine documentation: https://www.doctrine-project.org/projects/doctrine-orm/en/2.14/reference/inheritance-mapping.html#attribute-override
 
+### Mapped Superclasses
+
+A mapped superclass is an abstract or concrete class that provides persistent entity state and mapping information for its subclasses, but which is not itself an entity. Typically, the purpose of such a mapped superclass is to define state and mapping information that is common to multiple entity classes.
+
+```php
+#[ORM\MappedSuperclass]
+class Person
+{
+    #[ORM\Id]
+    #[ORM\GeneratedValue]
+    #[ORM\Column]
+    private ?int $id = null;
+
+    public function getId(): ?int
+    {
+        return $this->id;
+    }
+}
+
+#[ORM\Entity]
+class Employee extends Person
+{
+    private ?int $id = null;
+}
+
+#[ORM\Entity]
+class Toothbrush 
+{
+    #[ORM\Id]
+    #[ORM\GeneratedValue]
+    #[ORM\Column]
+    private ?int $id = null;
+
+    public function getId(): ?int
+    {
+        return $this->id;
+    }
+}
+///////////////////////////////////////////////////////////////////////////////
+
+```
+
+doctrine documentation: https://www.doctrine-project.org/projects/doctrine-orm/en/2.14/reference/inheritance-mapping.html#mapped-superclasses
+
 ## TODO
 
 ### User
