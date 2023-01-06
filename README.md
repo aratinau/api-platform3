@@ -1,8 +1,6 @@
-# Symfony Docker
+# Api platform 3
 
-A [Docker](https://www.docker.com/)-based installer and runtime for the [Symfony](https://symfony.com) web framework, with full [HTTP/2](https://symfony.com/doc/current/weblink.html), HTTP/3 and HTTPS support.
-
-![CI](https://github.com/dunglas/symfony-docker/workflows/CI/badge.svg)
+Generated from template https://github.com/dunglas/symfony-docker
 
 ## Getting Started
 
@@ -12,35 +10,43 @@ A [Docker](https://www.docker.com/)-based installer and runtime for the [Symfony
 4. Open `https://localhost` in your favorite web browser and [accept the auto-generated TLS certificate](https://stackoverflow.com/a/15076602/1352334)
 5. Run `docker compose down --remove-orphans` to stop the Docker containers.
 
-## Features
+# Roadmap
 
-* Production, development and CI ready
-* [Installation of extra Docker Compose services](docs/extra-services.md) with Symfony Flex
-* Automatic HTTPS (in dev and in prod!)
-* HTTP/2, HTTP/3 and [Preload](https://symfony.com/doc/current/web_link.html) support
-* Built-in [Mercure](https://symfony.com/doc/current/mercure.html) hub
-* [Vulcain](https://vulcain.rocks) support
-* Native [XDebug](docs/xdebug.md) integration
-* Just 2 services (PHP FPM and Caddy server)
-* Super-readable configuration
+- fork from dunglas/symfony-docker
+- install doctrine, api-platform, fixtures
 
-**Enjoy!**
+```shell
+composer require symfony/orm-pack
+composer require --dev symfony/maker-bundle
+```    
 
-## Docs
+- Creation Book entity + fixtures
 
-1. [Build options](docs/build.md)
-2. [Using Symfony Docker with an existing project](docs/existing-project.md)
-3. [Support for extra services](docs/extra-services.md)
-4. [Deploying in production](docs/production.md)
-5. [Debugging with Xdebug](docs/xdebug.md)
-6. [TLS Certificates](docs/tls.md)
-7. [Using a Makefile](docs/makefile.md)
-8. [Troubleshooting](docs/troubleshooting.md)
+    - filter on `category[]`
 
-## License
+- Install Lexik JWT
 
-Symfony Docker is available under the MIT License.
+    composer require "lexik/jwt-authentication-bundle"
+    php bin/console lexik:jwt:generate-keypair
 
-## Credits
+## TODO
 
-Created by [Kévin Dunglas](https://dunglas.fr), co-maintained by [Maxime Helias](https://twitter.com/maxhelias) and sponsored by [Les-Tilleuls.coop](https://les-tilleuls.coop).
+- [ ] mail confirmation
+- [ ] resend mail confirmation (expiration date)
+
+
+- [ ] password forgot
+- [ ] change password forgot
+
+
+- [ ] update mail (resend confirmation mail + expiration date)
+- [ ] update password (need current password)
+
+
+- [ ] multipart
+
+
+- [ ] enum instead array in Book $category
+
+- [ ] all DiscriminatorMap {"NONE", "JOINED", "SINGLE_TABLE", "TABLE_PER_CLASS"} 
+
