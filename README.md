@@ -102,6 +102,11 @@ doctrine documentation: https://www.doctrine-project.org/projects/doctrine-orm/e
 
 override a field mapping defined by the mapped superclass
 
+    Things to note:
+      - The "attribute override" specifies the overrides base on the property name.
+      - The column type CANNOT be changed. If the column type is not equal you get a MappingException
+      - The override can redefine all the attributes except the type.
+
 ```php
 #[MappedSuperclass]
 class User
