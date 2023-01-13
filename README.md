@@ -6,11 +6,49 @@ Generated from template https://github.com/dunglas/symfony-docker
 
 1. If not already done, [install Docker Compose](https://docs.docker.com/compose/install/) (v2.10+)
 2. Run `docker compose build --pull --no-cache` to build fresh images
-3. Run `docker compose up` (the logs will be displayed in the current shell)
-4. Open `https://localhost` in your favorite web browser and [accept the auto-generated TLS certificate](https://stackoverflow.com/a/15076602/1352334)
-5. Run `docker compose down --remove-orphans` to stop the Docker containers.
+3. `make start`
+4. `make sh` to enter php container
+5. `php bin/console lexik:jwt:generate-keypair`
+6. Open `https://localhost` in your favorite web browser and [accept the auto-generated TLS certificate](https://stackoverflow.com/a/15076602/1352334)
+7. Run `docker compose down --remove-orphans` to stop the Docker containers.
 
-## Roadmap
+### Create and fill database
+
+`make sh` (if you're not in the php container allready) 
+
+`php bin/console doctrine:database:create`
+
+`php bin/console doctrine:schema:update --force`
+
+### Create User
+
+`POST https://localhost/api/register`
+
+```json
+{
+    "email": "john@email.com",
+    "password": "B2#Etw8BN3zi"
+}
+```
+
+### Authentication
+
+`POST https://localhost/api/login_check`
+
+```json
+{
+    "email": "john@email.com",
+    "password": "B2#Etw8BN3zi"
+}
+```
+
+## Fix 🔧
+
+- `UniqueEntity('email')`
+
+- `php bin/console hautelook:fixtures:load`
+
+## Roadmap 🛣️
 
 - fork from dunglas/symfony-docker
 - install doctrine, api-platform, fixtures
@@ -194,7 +232,7 @@ commit related: https://github.com/aratinau/api-platform3/commit/f15447fb7bf1982
 
 doctrine documentation: https://www.doctrine-project.org/projects/doctrine-orm/en/2.14/reference/inheritance-mapping.html#mapped-superclasses
 
-## TODO
+## TODO 📝
 
 ### User
 - [ ] mail confirmation
