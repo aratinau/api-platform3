@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\State;
+namespace App\Provider;
 
 use ApiPlatform\Doctrine\Orm\Extension\QueryResultCollectionExtensionInterface;
 use ApiPlatform\Doctrine\Orm\Util\QueryNameGenerator;
