@@ -52,6 +52,16 @@ Generated from template https://github.com/dunglas/symfony-docker
 [EntityA EntityB](docs/EntityAB/index.md) Example of
 - `InheritanceType` `SINGLE_TABLE`
 
+[EntityX EntityY EntityZ](docs/EntityXYZ/index.md) Example of
+- `MappedSuperclass` and Get Collection of EntityY and EntityZ on same GetCollection
+- Automatically applies the author with the Interface `AuthorInterface.php` and the Subscriber `AttachAuthorSubscriber`
+
+## Notes
+
+    "hydra:description": "Unable to generate an IRI for the item of type \"App\\Entity\\EntityB\""
+    This was happening because the entity was never being saved, so the id was never generated.
+    https://stackoverflow.com/questions/57887026/unable-to-generate-an-iri-for-the-item-of-type-exception-after-api-platform-mi
+
 ## Fix 🔧
 
 - `UniqueEntity('email')`

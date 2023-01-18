@@ -1,5 +1,7 @@
 # EntitiyA EntitiyB
 
+    InheritanceType SINGLE_TABLE
+
 ### Request
 
 `POST https://localhost/api/entity_as`
