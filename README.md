@@ -52,9 +52,36 @@ Generated from template https://github.com/dunglas/symfony-docker
 [EntityA EntityB](docs/EntityAB/index.md) Example of
 - `InheritanceType` `SINGLE_TABLE`
 
-[EntityX EntityY EntityZ](docs/EntityXYZ/index.md) Example of
+PR related: https://github.com/aratinau/api-platform3/pull/1
+
+[EntityX EntityY EntityZ](docs/EntityXYZ/index.md) 
+
+```mermaid
+classDiagram
+    EntityX --> EntityY
+    EntityX --> EntityZ
+
+    class EntityX ~abstract~
+    EntityX : +User author
+    EntityX : +string name
+
+    class EntityY
+    EntityY : +string recipient
+
+    class EntityZ
+    EntityZ : +Collection recipients
+```
+
+Example of
 - `MappedSuperclass` and Get Collection of EntityY and EntityZ on same GetCollection
 - Automatically applies the author with the Interface `AuthorInterface.php` and the Subscriber `AttachAuthorSubscriber`
+
+PR related: https://github.com/aratinau/api-platform3/pull/2
+
+TODO TMP : le retour dans docs/EntityAB/index.md de `POST https://localhost/api/entity_bs`
+-> est ce que je peux faire un GET/entitiesabs ? (pour avoir les deux)
+
+TODO ++ : et pourquoi ne pas utiliser le paginator ? (est ce que les filtres marchent sur le paginator ?)
 
 ## Notes
 
@@ -109,7 +136,9 @@ composer require --dev symfony/maker-bundle
 ### Misc
 - [ ] enum instead array in Book $category
 
-### Doctrine
+### MappedSuperclass
 
-- [ ] all DiscriminatorMap {"NONE", "JOINED", "SINGLE_TABLE", "TABLE_PER_CLASS"} 
-
+- [ ] hydrate the results by iri
+- [ ] paginate results
+- [ ] order results
+- [ ] filter results
