@@ -44,17 +44,13 @@ Generated from template https://github.com/dunglas/symfony-docker
 
 ## Docs
 
-[Doctrine](docs/Doctrine/index.md) Example of
-- Association Override
-- Attribute Override
-- Mapped Superclasses
+[Summary of](docs/Doctrine/index.md) Association Override, Attribute Override, Mapped Superclasses
 
-[EntityA EntityB](docs/EntityAB/index.md) Example of
-- `InheritanceType` `SINGLE_TABLE`
+[EntityA EntityB](docs/EntityAB/index.md) Example using `InheritanceType` in mode `SINGLE_TABLE`
 
 PR related: https://github.com/aratinau/api-platform3/pull/1
 
-[EntityX EntityY EntityZ](docs/EntityXYZ/index.md) 
+[EntityX EntityY EntityZ](docs/EntityXYZ/index.md) Example using `MappedSuperclass` on abstract class
 
 ```mermaid
 classDiagram
@@ -78,10 +74,25 @@ Example of
 
 PR related: https://github.com/aratinau/api-platform3/pull/2
 
-TODO TMP : le retour dans docs/EntityAB/index.md de `POST https://localhost/api/entity_bs`
--> est ce que je peux faire un GET/entitiesabs ? (pour avoir les deux)
+[Mail MailIncoming MailOutcoming](docs/Mail/index.md) of 🚀 `InheritanceType` in mode `JOINED`
 
-TODO ++ : et pourquoi ne pas utiliser le paginator ? (est ce que les filtres marchent sur le paginator ?)
+```mermaid
+classDiagram
+    Mail --> MailIncoming
+    Mail --> MailOutcoming
+
+    class Mail
+    Mail : +User author
+    Mail : +string subject
+
+    class MailIncoming
+    MailIncoming : +string sender
+    MailIncoming : +Collection recipients
+
+    class MailOutcoming
+    MailOutcoming : +User sender
+    MailOutcoming : +string recipient
+```
 
 ## Notes
 
@@ -111,8 +122,8 @@ composer require --dev symfony/maker-bundle
 
 - Install Lexik JWT
 
-    composer require "lexik/jwt-authentication-bundle"
-    php bin/console lexik:jwt:generate-keypair
+  - `composer require "lexik/jwt-authentication-bundle"`
+  - `php bin/console lexik:jwt:generate-keypair`
 
 
 ## TODO 📝
