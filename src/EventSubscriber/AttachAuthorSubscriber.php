@@ -4,7 +4,7 @@ namespace App\EventSubscriber;
 
 use ApiPlatform\Symfony\EventListener\EventPriorities;
 use App\Entity\AuthorInterface;
-use App\Entity\User;
+use App\Entity\CurrentUserIsAuthorCollectionInterface;
 use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -36,10 +36,6 @@ class AttachAuthorSubscriber implements EventSubscriberInterface
 
         $user = $this->security->getUser();
         if (!$user) {
-            return;
-        }
-
-        if (!$user instanceof User) {
             return;
         }
 
