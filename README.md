@@ -94,6 +94,8 @@ classDiagram
     MailOutcoming : +string recipient
 ```
 
+PR related: https://github.com/aratinau/api-platform3/pull/3
+
 ## Notes
 
     "hydra:description": "Unable to generate an IRI for the item of type \"App\\Entity\\EntityB\""
