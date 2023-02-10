@@ -44,13 +44,13 @@ Generated from template https://github.com/dunglas/symfony-docker
 
 ## Docs
 
-[Summary of](docs/Doctrine/index.md) Association Override, Attribute Override, Mapped Superclasses
+### [Summary of](docs/Doctrine/index.md) Association Override, Attribute Override, Mapped Superclasses
 
-[EntityA EntityB](docs/EntityAB/index.md) Example using `InheritanceType` in mode `SINGLE_TABLE`
+### [EntityA EntityB](docs/EntityAB/index.md) Example using `InheritanceType` in mode `SINGLE_TABLE`
 
 PR related: https://github.com/aratinau/api-platform3/pull/1
 
-[EntityX EntityY EntityZ](docs/EntityXYZ/index.md) Example using `MappedSuperclass` on abstract class
+### [EntityX EntityY EntityZ](docs/EntityXYZ/index.md) Example using `MappedSuperclass` on abstract class
 
 ```mermaid
 classDiagram
@@ -74,7 +74,7 @@ Example of
 
 PR related: https://github.com/aratinau/api-platform3/pull/2
 
-[Mail MailIncoming MailOutcoming](docs/Mail/index.md) of 🚀 `InheritanceType` in mode `JOINED`
+### [Mail MailIncoming MailOutcoming](docs/Mail/index.md) of 🚀 `InheritanceType` in mode `JOINED`
 
 ```mermaid
 classDiagram
@@ -95,6 +95,26 @@ classDiagram
 ```
 
 PR related: https://github.com/aratinau/api-platform3/pull/3
+
+### Format `text/csv`, `text/dino 🦕`
+
+![format.png](./docs/Format/format.png)
+
+```bash
+curl -X 'GET' \
+  'https://localhost/api/users?page=1' \
+  -H 'accept: text/dino'
+```
+
+![format.png](./docs/Format/format-dino.png)
+
+```bash
+curl -X 'GET' \
+  'https://localhost/api/users?page=1' \
+  -H 'accept: text/csv'
+```
+
+![format.png](./docs/Format/format-csv.png)
 
 ## Notes
 
