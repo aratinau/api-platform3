@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Metadata\ApiResource;
 use ApiPlatform\Metadata\GetCollection;
 use ApiPlatform\Metadata\Post;
 use App\DTO\UserRegisterInput;
@@ -13,9 +14,20 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 #[ORM\Table(name: '`user`')]
+#[ApiResource(
+    formats: [
+        'jsonld',
+        'json',
+        'html',
+        'jsonhal',
+        'dino' => 'text/dino',
+        'csv' => 'text/csv',
+    ],
+)]
 #[GetCollection()]
 #[Post(uriTemplate: '/register', input: UserRegisterInput::class, processor: UserPostProcessor::class)]
 #[ORM\MappedSuperclass]
@@ -28,6 +40,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private ?int $id = null;
 
     #[ORM\Column(length: 180, unique: true)]
+    #[Groups(groups: ['user:read'])]
     private ?string $email = null;
 
     #[ORM\Column]
