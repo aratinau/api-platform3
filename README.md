@@ -116,6 +116,8 @@ curl -X 'GET' \
 
 ![format.png](./docs/Format/format-csv.png)
 
+PR related: https://github.com/aratinau/api-platform3/pull/4
+
 ## Notes
 
     "hydra:description": "Unable to generate an IRI for the item of type \"App\\Entity\\EntityB\""
