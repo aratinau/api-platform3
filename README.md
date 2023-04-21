@@ -149,6 +149,28 @@ composer require --dev symfony/maker-bundle
   - `composer require "lexik/jwt-authentication-bundle"`
   - `php bin/console lexik:jwt:generate-keypair`
 
+## Discussion and Message
+
+### Create a new Discussion with a Message
+
+`POST /api/discussions`
+
+```json
+{
+    "content": "Fuga ducimus debitis fuga quis sint similique dolores."
+}
+```
+
+### Create a new Message to an existing Discussion
+
+`POST /api/discussions/{id}/message`
+
+```json
+{
+    "content": "Hic ut et excepturi molestias amet sit."
+}
+```
+
 
 ## TODO 📝
 
