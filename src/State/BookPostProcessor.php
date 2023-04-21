@@ -25,6 +25,7 @@ class BookPostProcessor implements ProcessorInterface
         // https://stackoverflow.com/questions/57887026/unable-to-generate-an-iri-for-the-item-of-type-exception-after-api-platform-mi
 
         $this->entityManager->persist($data);
+        $this->entityManager->flush();
 
         return $data;
     }

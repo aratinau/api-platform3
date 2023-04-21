@@ -47,7 +47,7 @@ class SerializerContextBuilder implements SerializerContextBuilderInterface
         $classAlias = strtolower(preg_replace('/[A-Z]/', '_\\0', lcfirst($shortName)));
         $readOrWrite = $normalization ? 'read' : 'write';
 
-        $itemOrCollection = $context['operation'] instanceof GetCollection ?? false;
+        $itemOrCollection = $context['operation'] instanceof GetCollection ? 'collection' : 'item';
 
         $operationName =
             strtolower(
