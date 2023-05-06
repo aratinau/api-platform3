@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use ApiPlatform\Metadata\ApiResource;
+use ApiPlatform\Metadata\GetCollection;
 use ApiPlatform\Metadata\Post;
 use App\Repository\MessageRepository;
 use App\State\MessagePostProcessor;
@@ -13,6 +14,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: MessageRepository::class)]
 #[ApiResource]
+#[GetCollection]
 #[Post(
     uriTemplate: '/discussions/{id}/message',
     read: false,

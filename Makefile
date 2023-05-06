@@ -26,10 +26,8 @@ up: ## Start the docker hub in detached mode (no logs)
 
 start: up ## Start the containers
 
-stop:
-	@$(DOCKER_COMP) stop
-
-restart: stop start
+restart:
+	@$(DOCKER_COMP) restart
 
 down: ## Stop the docker hub
 	@$(DOCKER_COMP) down --remove-orphans
