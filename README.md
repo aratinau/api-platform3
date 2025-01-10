@@ -1,16 +1,8 @@
 # Api platform 3
 
-Generated from template https://github.com/dunglas/symfony-docker
+`make build`
 
-## Getting Started
-
-1. If not already done, [install Docker Compose](https://docs.docker.com/compose/install/) (v2.10+)
-2. Run `docker compose build --pull --no-cache` to build fresh images
-3. `make start`
-4. `make sh` to enter php container
-5. `php bin/console lexik:jwt:generate-keypair`
-6. Open `https://localhost` in your favorite web browser and [accept the auto-generated TLS certificate](https://stackoverflow.com/a/15076602/1352334)
-7. Run `docker compose down --remove-orphans` to stop the Docker containers.
+`make up`
 
 ### Create and fill database
 
