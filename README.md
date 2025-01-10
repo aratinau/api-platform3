@@ -147,6 +147,8 @@ composer require --dev symfony/maker-bundle
 
 ### Create a new Discussion with a Message
 
+![output.png](docs/Discussion/output.png)
+
 `POST /api/discussions`
 
 ```json

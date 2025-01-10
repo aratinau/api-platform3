@@ -1,9 +1,11 @@
 <?php
 
-namespace App\Entity;
+namespace App\Entity\Discussion;
 
 use ApiPlatform\Metadata\ApiResource;
+use ApiPlatform\Metadata\Get;
 use ApiPlatform\Metadata\GetCollection;
+use ApiPlatform\Metadata\Link;
 use ApiPlatform\Metadata\Post;
 use App\Repository\MessageRepository;
 use App\State\MessagePostProcessor;
@@ -14,11 +16,20 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: MessageRepository::class)]
 #[ApiResource]
-#[GetCollection]
 #[Post(
     uriTemplate: '/discussions/{id}/message',
     read: false,
     processor: MessagePostProcessor::class
+)]
+#[ApiResource(
+    uriTemplate: '/discussions/{id}/messages.{_format}',
+    operations: [new GetCollection()],
+    uriVariables: [
+        'id' => new Link(
+            fromProperty: 'messages',
+            fromClass: Discussion::class,
+        ),
+    ],
 )]
 class Message
 {

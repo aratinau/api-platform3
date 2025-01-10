@@ -4,7 +4,7 @@ namespace App\State;
 
 use ApiPlatform\Metadata\Operation;
 use ApiPlatform\State\ProcessorInterface;
-use App\Entity\Message;
+use App\Entity\Discussion\Message;
 use App\Repository\DiscussionRepository;
 use Doctrine\ORM\EntityManagerInterface;
 

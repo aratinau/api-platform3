@@ -1,14 +1,15 @@
 <?php
 
-namespace App\Entity;
+namespace App\Entity\Discussion;
 
 use ApiPlatform\Metadata\ApiResource;
+use App\Entity\AuthorInterface;
+use App\Entity\User;
 use App\Repository\DiscussionRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
-use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: DiscussionRepository::class)]
 #[ApiResource]
@@ -21,6 +22,7 @@ class Discussion implements AuthorInterface
 
     #[ORM\ManyToOne]
     #[ORM\JoinColumn(nullable: false)]
+    #[Groups(groups: ['discussion:read'])]
     private ?User $author = null;
 
     #[ORM\OneToMany(mappedBy: 'discussion', targetEntity: Message::class, cascade: ['persist'], orphanRemoval: true)]

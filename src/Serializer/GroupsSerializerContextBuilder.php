@@ -3,15 +3,17 @@
 namespace App\Serializer;
 
 use ApiPlatform\Metadata\GetCollection;
-use ApiPlatform\Serializer\SerializerContextBuilderInterface;
+use ApiPlatform\State\SerializerContextBuilderInterface;
+use App\Entity\Discussion\Discussion;
+use App\Entity\Discussion\Message;
+use Symfony\Component\DependencyInjection\Attribute\AsDecorator;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 
-class SerializerContextBuilder implements SerializerContextBuilderInterface
+#[AsDecorator('api_platform.serializer.context_builder')]
+class GroupsSerializerContextBuilder implements SerializerContextBuilderInterface
 {
     public function __construct(
         private readonly SerializerContextBuilderInterface $decorated,
-        private AuthorizationCheckerInterface $authorizationChecker
     ) {
     }
 
@@ -20,43 +22,32 @@ class SerializerContextBuilder implements SerializerContextBuilderInterface
         $context = $this->decorated->createFromRequest($request, $normalization, $extractedAttributes);
         $context['groups'] = $context['groups'] ?? [];
 
-        $isAdmin = $this->authorizationChecker->isGranted('ROLE_ADMIN');
+        $resourceClass = $context['resource_class'] ?? null;
 
         $context['groups'] = array_merge(
             $context['groups'],
-            $this->addDefaultGroups($context, $normalization)
+            $this->addDefaultGroups($context, $normalization, $resourceClass)
         );
-
-        if ($isAdmin) {
-            $context['groups'][] = $normalization ? 'admin:read' : 'admin:write';
-        }
 
         $context['groups'] = array_unique($context['groups']);
 
         return $context;
     }
 
-    private function addDefaultGroups(array $context, bool $normalization)
+    private function addDefaultGroups(array $context, bool $normalization, $resourceClass)
     {
-        $resourceClass = $context['resource_class'] ?? null;
         if (!$resourceClass) {
             return;
         }
-
         $shortName = (new \ReflectionClass($resourceClass))->getShortName();
         $classAlias = strtolower(preg_replace('/[A-Z]/', '_\\0', lcfirst($shortName)));
         $readOrWrite = $normalization ? 'read' : 'write';
 
         $itemOrCollection = $context['operation'] instanceof GetCollection ? 'collection' : 'item';
 
-        $operationName =
-            strtolower(
-                preg_replace('/[A-Z]/', '\\0', lcfirst($context['operation']::class)
-                )
-            )
-        ;
-        $operationName = explode('\\', $operationName);
+        $operationName = explode('\\', $context['operation']::class);
         $operationName = end($operationName);
+        $operationName = strtolower($operationName);
 
         return [
             // {class}:{read/write}
@@ -68,7 +59,7 @@ class SerializerContextBuilder implements SerializerContextBuilderInterface
             sprintf('%s:%s:%s', $classAlias, $itemOrCollection, $readOrWrite),
 
             // {class}:{item/collection}:{operationName}
-            // e.g. user:collection:get
+            // e.g. user:item:post
             sprintf('%s:%s:%s', $classAlias, $itemOrCollection, $operationName),
         ];
     }

@@ -2,7 +2,7 @@
 
 namespace App\Repository;
 
-use App\Entity\Discussion;
+use App\Entity\Discussion\Discussion;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
