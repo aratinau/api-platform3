@@ -32,11 +32,32 @@ final class UserFactory extends PersistentProxyObjectFactory
      */
     protected function defaults(): array|callable
     {
+        $sex = $this->getRandomGender();
+
         return [
             'email' => self::faker()->unique()->safeEmail(),
             'password' => self::PASSWORD_HASHED,
+            'firstName' => $this->getFirstnameBySex($sex),
+            'lastName' => self::faker()->lastName(),
             'roles' => [],
         ];
+    }
+
+    private function getRandomGender() {
+        $genders = ['men', 'women'];
+
+        return $genders[array_rand($genders)];
+    }
+
+    private function getFirstnameBySex($sex)
+    {
+        if ($sex === 'men') {
+            return self::faker()->firstNameMale();
+        }
+
+        if ($sex === 'women') {
+            return self::faker()->firstNameFemale();
+        }
     }
 
     /**

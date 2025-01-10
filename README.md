@@ -147,6 +147,30 @@ composer require --dev symfony/maker-bundle
 
 ### Create a new Discussion with a Message
 
+On créé un message avec `DiscussionPostProcessor.php` et le payload suivant
+
+```json
+{
+    "content": "{{$randomLoremSentences}}",
+    "participants": [
+        "/api/users/17325",
+        "/api/users/17327"
+    ]
+}
+```
+
+- On créé une discussion, on alerte les participants
+  - DiscussionPostProcessor.php
+  - CreateDiscussionNotificationListener.php
+  - CreateMessageNotificationListener.php
+- Les participants lisent
+  - ReadDiscussionNotificationListener.php
+  - ReadMessageNotificationListener.php
+- On créé un message et ça alerte les autres personnes
+  - MessagePostProcessor.php
+  - CreateDiscussionNotificationListener.php
+  - CreateMessageNotificationListener.php
+
 ![output.png](docs/Discussion/output.png)
 
 `POST /api/discussions`

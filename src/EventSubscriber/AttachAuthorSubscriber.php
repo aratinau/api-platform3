@@ -11,7 +11,10 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Event\RequestEvent;
 use Symfony\Component\HttpKernel\KernelEvents;
 
-class AttachAuthorSubscriber implements EventSubscriberInterface
+/**
+ * @deprecated - use AttachAuthorDoctrineListener.php
+ */
+class AttachAuthorSubscriber //implements EventSubscriberInterface
 {
     public function __construct(
         private readonly Security $security

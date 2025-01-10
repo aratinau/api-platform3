@@ -31,3 +31,11 @@ services:
     App\Provider\BookCollectionProvider:
         bind:
             $collectionExtensions: !tagged api_platform.doctrine.orm.query_extension.collection
+
+    App\EventListener\AuthenticationSuccessListener:
+        tags:
+            - {
+                name: kernel.event_listener,
+                event: lexik_jwt_authentication.on_authentication_success,
+                method: onAuthenticationSuccessResponse
+            }

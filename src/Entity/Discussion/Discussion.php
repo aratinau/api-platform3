@@ -3,15 +3,22 @@
 namespace App\Entity\Discussion;
 
 use ApiPlatform\Metadata\ApiResource;
+use ApiPlatform\Metadata\Post;
+use App\DTO\CreateDiscussionInput;
 use App\Entity\AuthorInterface;
 use App\Entity\User;
 use App\Repository\DiscussionRepository;
+use App\State\DiscussionPostProcessor;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ORM\Entity(repositoryClass: DiscussionRepository::class)]
+#[Post(
+    input: CreateDiscussionInput::class,
+    processor: DiscussionPostProcessor::class
+)]
 #[ApiResource]
 class Discussion implements AuthorInterface
 {
@@ -29,12 +36,19 @@ class Discussion implements AuthorInterface
     private Collection $messages;
 
     #[Groups(groups: ['discussion:write'])]
-    ##[Assert\NotBlank()]
     private string $content;
+
+    /**
+     * @var Collection<int, DiscussionParticipant>
+     */
+    #[ORM\OneToMany(mappedBy: 'discussion', targetEntity: DiscussionParticipant::class, cascade: ['persist'], orphanRemoval: true)]
+    #[Groups(groups: ['discussion:read'])]
+    private Collection $discussionParticipant;
 
     public function __construct()
     {
         $this->messages = new ArrayCollection();
+        $this->discussionParticipant = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -92,5 +106,47 @@ class Discussion implements AuthorInterface
         $this->addMessage($msg);
 
         return $this;
+    }
+
+    /**
+     * @return Collection<int, DiscussionParticipant>
+     */
+    public function getDiscussionParticipant(): Collection
+    {
+        return $this->discussionParticipant;
+    }
+
+    public function addDiscussionParticipant(DiscussionParticipant $participant): static
+    {
+        if (!$this->discussionParticipant->contains($participant)) {
+            $this->discussionParticipant->add($participant);
+            $participant->setDiscussion($this);
+        }
+
+        return $this;
+    }
+
+    public function removeDiscussionParticipant(DiscussionParticipant $participant): static
+    {
+        if ($this->discussionParticipant->removeElement($participant)) {
+            // set the owning side to null (unless already changed)
+            if ($participant->getDiscussion() === $this) {
+                $participant->setDiscussion(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function getParticipants(): Collection
+    {
+        $participants = new ArrayCollection();
+        $discussionParticipants = $this->getDiscussionParticipant();
+
+        foreach ($discussionParticipants as $discussionParticipant) {
+            $participants->add($discussionParticipant->getParticipant());
+        }
+
+        return $participants;
     }
 }

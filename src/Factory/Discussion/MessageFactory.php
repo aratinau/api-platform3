@@ -3,6 +3,7 @@
 namespace App\Factory\Discussion;
 
 use App\Entity\Discussion\Message;
+use App\Factory\UserFactory;
 use App\Repository\MessageRepository;
 use Zenstruck\Foundry\Persistence\PersistentProxyObjectFactory;
 use Zenstruck\Foundry\Persistence\Proxy;
@@ -53,6 +54,7 @@ final class MessageFactory extends PersistentProxyObjectFactory
         return [
             'content' => self::faker()->text(),
             'discussion' => DiscussionFactory::new(),
+            'author' => UserFactory::new(),
         ];
     }
 

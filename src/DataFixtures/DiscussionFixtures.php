@@ -12,6 +12,8 @@ class DiscussionFixtures extends Fixture
 {
     public function load(ObjectManager $manager): void
     {
-        DiscussionFactory::createMany(50);
+        DiscussionFactory::createMany(50, [
+            'author' => UserFactory::random(),
+        ]);
     }
 }

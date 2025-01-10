@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use ApiPlatform\Metadata\ApiResource;
+use App\Attribute\ApiAuthGroups;
 use App\Repository\MailRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
@@ -16,6 +17,10 @@ use Symfony\Component\Serializer\Annotation\Groups;
     'outcoming' => MailOutcoming::class
 ])]
 #[ApiResource]
+#[ApiAuthGroups([
+    'CAN_EDIT' => ['read:collection:Owner'],
+    'ROLE_USER' => ['read:collection:User']
+])]
 class Mail implements AuthorInterface
 {
     #[ORM\Id]

@@ -22,6 +22,7 @@ class MessageFixtures extends Fixture
                 random_int(3, 8),
                 [
                     'discussion' => $discussion,
+                    'author' => UserFactory::random(),
                 ]
             );
         }
