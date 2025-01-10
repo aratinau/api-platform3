@@ -12,6 +12,8 @@
 
 `php bin/console doctrine:schema:update --force`
 
+`php bin/console doctrine:fixtures:load -n`
+
 ### Create User
 
 `POST https://localhost/api/register`
