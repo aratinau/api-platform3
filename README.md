@@ -147,6 +147,16 @@ composer require --dev symfony/maker-bundle
 
 ### Create a new Discussion with a Message
 
+je créé une discussion
+- j'informe les autres qu'il y a une discussion
+
+je créé un message :
+- j'informe les autres qu'il y a un message
+
+je lis un message :
+- je mets a read discussion
+- je mets a read message
+
 On créé un message avec `DiscussionPostProcessor.php` et le payload suivant
 
 ```json
@@ -159,19 +169,11 @@ On créé un message avec `DiscussionPostProcessor.php` et le payload suivant
 }
 ```
 
-- On créé une discussion, on alerte les participants
-  - DiscussionPostProcessor.php
-  - CreateDiscussionNotificationListener.php
-  - CreateMessageNotificationListener.php
-- Les participants lisent
-  - ReadDiscussionNotificationListener.php
-  - ReadMessageNotificationListener.php
-- On créé un message et ça alerte les autres personnes
-  - MessagePostProcessor.php
-  - CreateDiscussionNotificationListener.php
-  - CreateMessageNotificationListener.php
+- On créé une discussion, avec [DiscussionPostProcessor.php](src/State/DiscussionPostProcessor.php)
+- Les participants lisent avec [ReadMessageNotificationListener.php](src/DoctrineListener/Discussion/ReadMessageNotificationListener.php)
+- On créé un message avec [CreateMessageNotificationListener.php](src/DoctrineListener/Discussion/CreateMessageNotificationListener.php)
 
-![output.png](docs/Discussion/output.png)
+Amélioration : supprimer MessageNotification une fois lue ?
 
 `POST /api/discussions`
 

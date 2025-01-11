@@ -23,7 +23,7 @@ class CreateMessageNotificationListener
         $user = $this->security->getUser();
 
         // DiscussionParticipant
-        foreach ($message->getDiscussion()->getDiscussionParticipant() as $discussionParticipant) {
+        foreach ($message->getDiscussion()->getDiscussionParticipants() as $discussionParticipant) {
             $discussionParticipant->setRead(false);
             if ($discussionParticipant->getParticipant() === $user) {
                 // $discussionParticipant->setRead(true);
@@ -33,13 +33,13 @@ class CreateMessageNotificationListener
         }
 
         // MessageNotification
-        $discussionParticipants = $message->getDiscussion()->getDiscussionParticipant();
+        $discussionParticipants = $message->getDiscussion()->getDiscussionParticipants();
         foreach ($discussionParticipants as $discussionParticipant) {
             $messageNotification = new MessageNotification();
             $messageNotification->setParticipant($discussionParticipant->getParticipant());
             $messageNotification->setMessage($message);
             if ($message->getAuthor() === $discussionParticipant->getParticipant()) {
-                $messageNotification->setRead(true);
+                //$messageNotification->setRead(true);
             }
 
             $this->entityManager->persist($messageNotification);

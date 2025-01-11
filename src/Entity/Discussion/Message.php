@@ -9,7 +9,7 @@ use ApiPlatform\Metadata\Post;
 use App\Entity\AuthorInterface;
 use App\Entity\User;
 use App\Repository\MessageRepository;
-use App\State\MessagePostProcessor;
+use App\State\Discussion\MessagePostProcessor;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;

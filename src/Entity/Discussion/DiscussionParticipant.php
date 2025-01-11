@@ -19,10 +19,10 @@ class DiscussionParticipant
 
     #[ORM\ManyToOne]
     #[ORM\JoinColumn(nullable: false)]
-    #[Groups(groups: ['discussion:read'])]
+    #[Groups(['discussion:read'])]
     private ?User $participant = null;
 
-    #[ORM\ManyToOne(inversedBy: 'discussionParticipant')]
+    #[ORM\ManyToOne(inversedBy: 'discussionParticipants')]
     #[ORM\JoinColumn(nullable: false)]
     private ?Discussion $discussion = null;
 

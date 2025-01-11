@@ -1,14 +1,13 @@
 <?php
 
-namespace App\State;
+namespace App\State\Discussion;
 
 use ApiPlatform\Metadata\Operation;
 use ApiPlatform\State\ProcessorInterface;
 use App\DTO\CreateDiscussionInput;
 use App\Entity\Discussion\Discussion;
-use App\Entity\Discussion\DiscussionNotification;
-use App\Entity\Discussion\Message;
 use App\Entity\Discussion\DiscussionParticipant;
+use App\Entity\Discussion\Message;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\DependencyInjection\Attribute\Autowire;
@@ -56,7 +55,7 @@ class DiscussionPostProcessor implements ProcessorInterface
             $discussion->addDiscussionParticipant($discussionParticipant);
         }
 
-        $discussion->addDiscussionParticipant($discussionParticipant);
+        // $discussion->addDiscussionParticipant($discussionParticipant);
 
         return $this->persistProcessor->process($discussion, $operation, $uriVariables, $context);
     }

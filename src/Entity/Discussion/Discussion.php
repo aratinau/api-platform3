@@ -8,7 +8,7 @@ use App\DTO\CreateDiscussionInput;
 use App\Entity\AuthorInterface;
 use App\Entity\User;
 use App\Repository\DiscussionRepository;
-use App\State\DiscussionPostProcessor;
+use App\State\Discussion\DiscussionPostProcessor;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -29,7 +29,7 @@ class Discussion implements AuthorInterface
 
     #[ORM\ManyToOne]
     #[ORM\JoinColumn(nullable: false)]
-    #[Groups(groups: ['discussion:read'])]
+    #[Groups(['discussion:read'])]
     private ?User $author = null;
 
     #[ORM\OneToMany(mappedBy: 'discussion', targetEntity: Message::class, cascade: ['persist'], orphanRemoval: true)]
@@ -42,13 +42,13 @@ class Discussion implements AuthorInterface
      * @var Collection<int, DiscussionParticipant>
      */
     #[ORM\OneToMany(mappedBy: 'discussion', targetEntity: DiscussionParticipant::class, cascade: ['persist'], orphanRemoval: true)]
-    #[Groups(groups: ['discussion:read'])]
-    private Collection $discussionParticipant;
+    #[Groups(['discussion:read'])]
+    private Collection $discussionParticipants;
 
     public function __construct()
     {
         $this->messages = new ArrayCollection();
-        $this->discussionParticipant = new ArrayCollection();
+        $this->discussionParticipants = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -111,15 +111,15 @@ class Discussion implements AuthorInterface
     /**
      * @return Collection<int, DiscussionParticipant>
      */
-    public function getDiscussionParticipant(): Collection
+    public function getDiscussionParticipants(): Collection
     {
-        return $this->discussionParticipant;
+        return $this->discussionParticipants;
     }
 
     public function addDiscussionParticipant(DiscussionParticipant $participant): static
     {
-        if (!$this->discussionParticipant->contains($participant)) {
-            $this->discussionParticipant->add($participant);
+        if (!$this->discussionParticipants->contains($participant)) {
+            $this->discussionParticipants->add($participant);
             $participant->setDiscussion($this);
         }
 
@@ -128,7 +128,7 @@ class Discussion implements AuthorInterface
 
     public function removeDiscussionParticipant(DiscussionParticipant $participant): static
     {
-        if ($this->discussionParticipant->removeElement($participant)) {
+        if ($this->discussionParticipants->removeElement($participant)) {
             // set the owning side to null (unless already changed)
             if ($participant->getDiscussion() === $this) {
                 $participant->setDiscussion(null);
@@ -136,17 +136,5 @@ class Discussion implements AuthorInterface
         }
 
         return $this;
-    }
-
-    public function getParticipants(): Collection
-    {
-        $participants = new ArrayCollection();
-        $discussionParticipants = $this->getDiscussionParticipant();
-
-        foreach ($discussionParticipants as $discussionParticipant) {
-            $participants->add($discussionParticipant->getParticipant());
-        }
-
-        return $participants;
     }
 }

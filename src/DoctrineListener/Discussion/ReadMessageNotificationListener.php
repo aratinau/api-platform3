@@ -22,7 +22,7 @@ class ReadMessageNotificationListener
     {
         $user = $this->security->getUser();
 
-        foreach ($message->getDiscussion()->getDiscussionParticipant() as $discussionParticipant) {
+        foreach ($message->getDiscussion()->getDiscussionParticipants() as $discussionParticipant) {
             $discussionParticipant->setRead(false);
             if ($discussionParticipant->getParticipant() === $user) {
                 $discussionParticipant->setRead(true);

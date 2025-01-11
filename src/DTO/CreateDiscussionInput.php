@@ -2,7 +2,6 @@
 
 namespace App\DTO;
 
-use App\Entity\Courier;
 use App\Entity\User;
 use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Serializer\Annotation\Groups;
